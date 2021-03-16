@@ -2,6 +2,8 @@ require_relative "./piece.rb"
 
 class Board
 
+    attr_accessor :grid
+
     # def self.populate
     #     @grid.each_with_index do |row, idx|
     #         if idx.include?(0..1) || idx.include?(6..7)
@@ -14,18 +16,18 @@ class Board
 
 
     def initialize
-        @grid = Array.new(8) {Array.new(8, [])}
+        @grid = Array.new(8) {Array.new(8, nil)}
         # Board.populate
     end
 
     def populate
         
-        @grid.each_with_index do |row, row_idx|
+        grid.each_with_index do |row, row_idx|
            row.each_with_index do |col, col_idx| 
                 if (0..1).include?(row_idx) || (6..7).include?(row_idx)
-                    row[row_idx, col_idx] << Piece.new([row_idx, col_idx]) 
+                    self[[row_idx, col_idx]] = Piece.new([row_idx, col_idx])
                 else
-                 row.map { |space| space = nil }
+                    self[[row_idx, col_idx]] = nil
                 end
             end
         end
@@ -33,12 +35,12 @@ class Board
 
     def [](pos)
         x, y = pos 
-        @grid[x, y]
+        @grid[x][y]
     end
 
-    def []=(new_pos, value)
-        
-        @grid[new_pos] = value 
+    def []= (new_pos, value)
+        x, y = new_pos
+        @grid[x][y] = value 
     end  
 
     # @grid.each do |row|
