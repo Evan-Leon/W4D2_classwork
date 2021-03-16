@@ -14,33 +14,23 @@ end
 
 class Manager < Employee
 
-    # attr_accessor :employees
+    attr_accessor :employees
 
     def initialize(name, title, salary, boss)
         super
         @employees = []
     end
 
-    def add_employee(manager, employee)
-        @employees << employee
+    def add_employee(employee)
+        employees << employee
     end
-
-    def employees
-        @employees = []
-    end
-
 
     def bonus(multiplier)
-
-        quu = [employees]
-        count_sal = 0
-        until quu.empty? 
-            ele = quu.shift 
-            count_sal += ele.salary 
-            ele.employees.each { |employee| quu << employee} 
-        end
-
-        count_sal * multiplier
+        count = 0 
+        
+        employees.each {|employee| count += employee.salary}  
+        count * multiplier
+       
 
     end
 
@@ -55,8 +45,9 @@ david = Employee.new("David", "TA", 10000, darren)
 ned.add_employee(darren)
 darren.add_employee(shawna)
 darren.add_employee(david)
-
+darren.employees 
 p darren.bonus(4)
+p ned.b?onus(5)
 
 
 
