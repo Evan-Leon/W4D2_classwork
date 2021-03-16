@@ -4,24 +4,12 @@ class Board
 
     attr_accessor :grid
 
-    # def self.populate
-    #     @grid.each_with_index do |row, idx|
-    #         if idx.include?(0..1) || idx.include?(6..7)
-    #             row.each_with_index { |space, idx2| space << Piece.new([idx, idx2]) }
-    #         else
-    #             row.map { |space| space << nil }
-    #         end
-    #     end
-    # end
-
-
     def initialize
         @grid = Array.new(8) {Array.new(8, nil)}
-        # Board.populate
+        populate 
     end
 
     def populate
-        
         grid.each_with_index do |row, row_idx|
            row.each_with_index do |col, col_idx| 
                 if (0..1).include?(row_idx) || (6..7).include?(row_idx)
@@ -43,16 +31,19 @@ class Board
         @grid[x][y] = value 
     end  
 
-    # @grid.each do |row|
-    #     row.each do |ele|
+    def move_piece(start_pos, end_pos)
+        raise "Position OUT of bounds" if !valid_move?(start_pos) || !valid_move?(end_pos)
+        raise "No piece at start position" if self[start_pos] == nil 
+        raise "Cannot move piece here!" if self[end_pos] != nil 
+        
+        true 
 
-    #     end
-    # end
+    end
 
-
-    #rows 0 & 1 have pieces
-    #on rows 6 & 7(last row) pieces
-    # row 2-5 nil
+    def valid_move?(pos)
+        row, col = pos 
+        (0..7).include?(row) && (0..7).include?(col)
+    end
 
 end
 
